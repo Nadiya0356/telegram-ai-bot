@@ -26,3 +26,7 @@ func (s *Store) Add(userID int64, role, text string) {
 func (s *Store) Get(userID int64) []llm.Message {
 	return s.data[userID]
 }
+
+func (s *Store) Clear(userID int64) {
+	delete(s.data, userID)
+}

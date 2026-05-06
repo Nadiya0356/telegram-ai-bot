@@ -8,3 +8,8 @@ func (m *MockClient) Classify(text string, history []Message) (string, error) {
 	}
 	return "UNKNOWN", nil
 }
+
+// Chat потрібен щоб MockClient реалізував інтерфейс LLM
+func (m *MockClient) Chat(text string, history []Message) (string, error) {
+	return "Mock відповідь: " + text, nil
+}

@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"telegram-ai-bot/internal/bot"
 	"telegram-ai-bot/internal/config"
 	"telegram-ai-bot/internal/llm"
@@ -12,18 +14,21 @@ import (
 func main() {
 	cfg := config.Load()
 
-	b, _ := tgbotapi.NewBotAPI(cfg.TelegramToken)
+	log.Println("Starting AI bot...")
 
-	llmClient := llm.New(cfg.OpenAIKey)
+	b, err := tgbotapi.NewBotAPI(cfg.TelegramToken)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	llmClient := llm.New(cfg.OpenRouterKey)
 	store := session.New()
 	handler := bot.New(llmClient, store)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
-	updates := b.GetUpdatesChan(u)
-
-	for update := range updates {
+	for update := range b.GetUpdatesChan(u) {
 		handler.Handle(b, update)
 	}
 }

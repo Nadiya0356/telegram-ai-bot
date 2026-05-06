@@ -8,7 +8,7 @@ import (
 
 type Config struct {
 	TelegramToken string
-	OpenAIKey     string
+	OpenRouterKey string
 }
 
 func Load() Config {
@@ -16,6 +16,6 @@ func Load() Config {
 
 	return Config{
 		TelegramToken: os.Getenv("TELEGRAM_TOKEN"),
-		OpenAIKey:     os.Getenv("OPENAI_API_KEY"),
+		OpenRouterKey: os.Getenv("OPENROUTER_API_KEY"),
 	}
 }
